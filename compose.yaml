@@ -1,0 +1,10 @@
+services:
+  app:
+    image: swc/oauth:${VERSION:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
