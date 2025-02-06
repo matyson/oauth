@@ -1,0 +1,22 @@
+{
+  "name": "@swc/oauth",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "build": "tsc",
+    "lint": "tsc",
+    "ci": "bun run lint && bun run build"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@openauthjs/openauth": "^0.3.7",
+    "@t3-oss/env-core": "^0.12.0",
+    "zod": "^3.24.1"
+  }
+}
