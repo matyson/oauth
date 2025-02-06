@@ -1,16 +1,19 @@
 {
   "name": "@swc/oauth",
-  "module": "index.ts",
+  "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "build": "tsc",
+    "build": "tsup src/index.ts --format cjs,esm --dts",
     "lint": "tsc",
     "ci": "bun run lint && bun run build"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.12",
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "tsup": "^8.3.6"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
