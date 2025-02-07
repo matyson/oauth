@@ -3,8 +3,8 @@ import { MemoryStorage } from "@openauthjs/openauth/storage/memory";
 import { subjects } from "./subjects";
 import { KeycloakProvider } from "@openauthjs/openauth/provider/keycloak";
 import { env } from "./env";
-
-console.log(env);
+import { CodeProvider } from "@openauthjs/openauth/provider/code";
+import { CodeUI } from "@openauthjs/openauth/ui/code";
 
 type KeycloakPayload = {
   exp: number;
@@ -40,6 +40,13 @@ export default issuer({
   subjects,
   storage: MemoryStorage(),
   providers: {
+    code: CodeProvider(
+      CodeUI({
+        sendCode: async (email, code) => {
+          console.log(email, code);
+        },
+      })
+    ),
     keycloak: KeycloakProvider({
       baseUrl: env.KEYCLOAK_BASE_URL,
       realm: env.KEYCLOAK_REALM,
@@ -55,12 +62,19 @@ export default issuer({
       const payload = jwt.split(".")[1];
       const decoded = Buffer.from(payload, "base64").toString("utf-8");
       const json = JSON.parse(decoded) as KeycloakPayload;
-      console.log(json);
       return ctx.subject("user", {
         id: json.sub,
         email: json.email,
         name: json.name,
         username: json.preferred_username,
+      });
+    }
+    if (value.provider === "code") {
+      return ctx.subject("user", {
+        id: value.claims.email,
+        email: value.claims.email,
+        name: value.claims.email,
+        username: value.claims.email,
       });
     }
     throw new Error("Invalid provider");
