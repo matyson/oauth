@@ -1,0 +1,11 @@
+services:
+  app:
+    image: swc/oauth:coolify
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - KEYCLOAK_BASE_URL=${KEYCLOAK_BASE_URL}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
+      - KEYCLOAK_CLIENT_ID=${KEYCLOAK_CLIENT_ID}
+      - KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
